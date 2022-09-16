@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:theme_demo/services/service_theme.dart';
 import 'package:theme_demo/ui/pages/bloc/my_home_page_bloc.dart';
 
+/// This class contains the UI of my home page
 class MyHomePage extends StatefulWidget {
   final Function(int) function;
-
   const MyHomePage({super.key, required this.function});
 
   @override
@@ -18,18 +18,18 @@ class _MyHomePageState extends State<MyHomePage> {
       GoogleFonts.robotoTextTheme(ThemeData.dark().textTheme), true);
 
   @override
-  dispose() {
-    super.dispose();
-    homePageBloc.dividerController.close();
-    homePageBloc.wheelNotifier.close();
-  }
-
-  @override
   void initState() {
     super.initState();
     homePageBloc.dividerController.stream.listen((event) {
       widget.function(event);
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    homePageBloc.dividerController.close();
+    homePageBloc.wheelController.close();
   }
 
   @override
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
               secondaryImageWidth: 100,
               secondaryImageLeft: 150,
               secondaryImageTop: 150,
-              shouldStartOrStop: homePageBloc.wheelNotifier.stream,
+              shouldStartOrStop: homePageBloc.wheelController.stream,
             ),
             const SizedBox(height: 30),
             ElevatedButton(
